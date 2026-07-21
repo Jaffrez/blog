@@ -1,4 +1,4 @@
-baseURL: https://example.org/
-locale: en-us
-title: My New Hugo Project
+baseURL: https://jaffrez.io
+locale: zh-cn
+title: "Jaffrez's Blog"
 theme: "PaperMod"
