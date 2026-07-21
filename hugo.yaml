@@ -1,4 +1,59 @@
-baseURL: https://jaffrez.io
-locale: zh-cn
+baseURL: "https://jaffrez.io"
+locale: "zh-cn"
+defaultContentLanguage: "zh"
 title: "Jaffrez's Blog"
 theme: "PaperMod"
+
+enableRobotsTXT: true
+enableEmoji: true
+hasCJKLanguage: true
+
+permalinks:
+  posts: "/posts/:slug/"
+
+params:
+  mainSections:
+    - "posts"
+  author: "Jaffrez"
+  keywords:
+    - "blog"
+    - "Jaffrez"
+  DateFormat: "2006-01-02"
+  defaultTheme: "dark"
+  ShowCodeCopyButtons: true
+  ShowRssButtonInSectionTermList: true
+  UseHugoToc: true
+  showtoc: true
+
+  homeInfoParams:
+    Title: "Hi! I'm Jaffrez 👋"
+    Content: "一名热衷于计算机的学生。"
+
+  images:
+    - "avatar.jpg"
+
+  assets:
+    favicon: "/favicon.ico"
+    favicon16x16: "/favicon-16x16.png"
+    favicon32x32: "/favicon-32x32.png"
+    apple_touch_icon: "/apple-touch-icon.png"
+    safari_pinned_tab: "/safari_pinned_tab.svg"
+
+  socialIcons:
+    - name: "github"
+      url: "https://github.com/Jaffrez/"
+    - name: "email"
+      url: "mailto:Jaffrez@outlook.com"
+    - name: "rss"
+      url: "/index.xml"
+
+  cover:
+    hidden: true
+    hiddenInList: true
+    hiddenInSingle: true
+
+markup:
+  highlight:
+    noClasses: false
+    lineNos: true
+    codeFences: true
