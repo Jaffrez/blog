@@ -52,6 +52,14 @@ params:
     hiddenInList: true
     hiddenInSingle: true
 
+  editPost:
+    URL: "https://github.com/Jaffrez/blog/tree/master/content"
+    Text: "指出问题"
+    appendFilePath: true
+
+  fuseOpts:
+    limit: 10
+
   footer:
     text: "Analytics by [Umami](https://umami.is)"
 
@@ -69,3 +77,24 @@ markup:
 
 taxonomies:
   tag: tags
+
+menu:
+  main:
+    - identifier: "search"
+      name: "搜索"
+      pageRef: "/search"
+      weight: 10
+    - identifier: "archives"
+      name: "文章"
+      pageRef: "/archives"
+      weight: 30
+    - identifier: "about"
+      name: "关于我"
+      pageRef: "/about"
+      weight: 40
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
