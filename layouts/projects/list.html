@@ -1,0 +1,54 @@
+{{- define "main" }}
+
+<header class="page-header projects-header">
+  {{- partial "breadcrumbs.html" . }}
+  <h1>{{ .Title }}</h1>
+  {{- with .Description }}
+  <div class="post-description">{{ . | markdownify }}</div>
+  {{- end }}
+</header>
+
+{{- with .Content }}
+<div class="post-content projects-intro">{{ . }}</div>
+{{- end }}
+
+{{- $featured := slice }}
+{{- $regular := slice }}
+{{- range $project := .Sections }}
+  {{- $latest := $project.Date }}
+  {{- range $project.RegularPages }}
+    {{- if or $latest.IsZero (gt .Date.Unix $latest.Unix) }}{{ $latest = .Date }}{{ end }}
+  {{- end }}
+  {{- $meta := partial "project-meta.html" $project }}
+  {{- $item := dict "page" $project "latest" $latest "latestUnix" $latest.Unix "meta" $meta }}
+  {{- if $meta.featured }}
+    {{- $featured = $featured | append $item }}
+  {{- else }}
+    {{- $regular = $regular | append $item }}
+  {{- end }}
+{{- end }}
+{{- $projects := (sort $featured "latestUnix" "desc") | append (sort $regular "latestUnix" "desc") }}
+
+{{- if $projects }}
+<section class="project-grid" aria-label="项目列表">
+  {{- range $item := $projects }}
+    {{- $project := $item.page }}
+    {{- $meta := $item.meta }}
+  <article class="project-card">
+    <div class="project-card-body">
+      <div class="project-card-heading">
+        <h2>{{ $project.Title }}</h2>
+        <span class="project-status project-status--{{ $meta.statusKey }}">{{ $meta.statusLabel }}</span>
+      </div>
+      {{- with $project.Description }}<p class="project-card-description">{{ . }}</p>{{ end }}
+      <p class="project-updated">最近更新：<time datetime="{{ $item.latest.Format "2006-01-02" }}">{{ $item.latest | time.Format (default "2006-01-02" site.Params.DateFormat) }}</time></p>
+    </div>
+    <a class="project-card-link" href="{{ $project.RelPermalink }}" aria-label="查看项目：{{ $project.Title }}"></a>
+  </article>
+  {{- end }}
+</section>
+{{- else }}
+<p class="projects-empty">项目仍在整理中，稍后再来看看吧。</p>
+{{- end }}
+
+{{- end }}

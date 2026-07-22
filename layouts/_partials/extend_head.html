@@ -13,6 +13,13 @@
   {{- end }}
 {{- end }}
 
+{{- if eq .Section "projects" }}
+  {{- with resources.Get "css/projects.css" }}
+    {{- $projectsCSS := . | minify | fingerprint }}
+<link crossorigin="anonymous" href="{{ $projectsCSS.RelPermalink }}" integrity="{{ $projectsCSS.Data.Integrity }}" rel="preload stylesheet" as="style">
+  {{- end }}
+{{- end }}
+
 {{- with site.Params.integrations.umami }}
   {{- if and hugo.IsProduction .enabled .scriptURL .websiteID }}
 <script defer src="{{ .scriptURL | safeURL }}" data-website-id="{{ .websiteID }}"></script>

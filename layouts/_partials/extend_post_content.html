@@ -1,4 +1,5 @@
-{{- if eq .Section "posts" }}
+{{- $isArticle := or (eq .Section "posts") (and (eq .Section "projects") (eq .Kind "page")) -}}
+{{- if $isArticle }}
   {{- with site.Params.integrations.mediumZoom }}
     {{- if and .enabled .scriptURL }}
 <script defer src="{{ .scriptURL | safeURL }}"></script>

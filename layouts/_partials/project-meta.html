@@ -1,0 +1,28 @@
+{{- $file := .Path -}}
+{{- with .File }}{{ $file = .Path }}{{ end -}}
+
+{{- range $name := slice "archived" "featured" -}}
+  {{- if and (isset $.Params $name) (ne (printf "%T" (index $.Params $name)) "bool") -}}
+    {{- errorf "项目 %q 的 %s 必须是布尔值 true 或 false，当前值为 %q" $file $name (index $.Params $name) -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if isset .Params "repo" -}}
+  {{- if ne (printf "%T" .Params.repo) "string" -}}
+    {{- errorf "项目 %q 的 repo 必须是字符串，当前值为 %q" $file .Params.repo -}}
+  {{- end -}}
+  {{- with .Params.repo -}}
+    {{- if not (findRE `^https?://[^[:space:]/]+(/.*)?$` . 1) -}}
+      {{- errorf "项目 %q 的 repo 必须是完整的 HTTP(S) URL，当前值为 %q" $file . -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $archived := .Params.archived | default false -}}
+{{- $featured := .Params.featured | default false -}}
+{{- return (dict
+  "archived" $archived
+  "featured" $featured
+  "statusKey" (cond $archived "archived" "active")
+  "statusLabel" (cond $archived "已归档" "活跃")
+) -}}

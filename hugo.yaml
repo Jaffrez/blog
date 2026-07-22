@@ -108,6 +108,10 @@ menu:
       name: "搜索"
       pageRef: "/search"
       weight: 10
+    - identifier: "projects"
+      name: "项目"
+      pageRef: "/projects"
+      weight: 20
     - identifier: "archives"
       name: "文章"
       pageRef: "/archives"

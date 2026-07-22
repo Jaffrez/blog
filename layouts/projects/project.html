@@ -1,0 +1,54 @@
+{{- define "main" }}
+
+{{- $meta := partial "project-meta.html" . }}
+
+<article class="post-single project-single">
+  <header class="post-header project-hero">
+    {{- partial "breadcrumbs.html" . }}
+    <div class="project-title-row">
+      <h1 class="post-title">{{ .Title }}</h1>
+      <span class="project-status project-status--{{ $meta.statusKey }}">{{ $meta.statusLabel }}</span>
+    </div>
+    {{- with .Description }}<div class="post-description">{{ . }}</div>{{ end }}
+
+    {{- with .Params.repo }}
+    <nav class="project-actions" aria-label="项目链接">
+      <a href="{{ . }}" target="_blank" rel="noopener noreferrer">查看源码</a>
+    </nav>
+    {{- end }}
+  </header>
+
+  {{- with .Content }}
+  <div class="post-content md-content project-content">{{ . }}</div>
+  {{- end }}
+
+  {{- $logs := .RegularPages.ByDate.Reverse }}
+  <section class="project-logs" aria-labelledby="development-log-title">
+    <header class="project-logs-header">
+      <h2 id="development-log-title">Development Log</h2>
+      <span>{{ len $logs }} 篇记录</span>
+    </header>
+    {{- if $logs }}
+    <ol class="project-timeline">
+      {{- range $logs }}
+      <li>
+        <article class="project-log-entry">
+          <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format (default "2006-01-02" site.Params.DateFormat) }}</time>
+          <div>
+            <div class="project-log-title-row">
+              <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+              {{- with .Params.version }}<span class="project-version">{{ . }}</span>{{ end }}
+            </div>
+            {{- with .Description }}<p>{{ . }}</p>{{ end }}
+          </div>
+        </article>
+      </li>
+      {{- end }}
+    </ol>
+    {{- else }}
+    <p class="projects-empty">还没有 Development Log。</p>
+    {{- end }}
+  </section>
+</article>
+
+{{- end }}

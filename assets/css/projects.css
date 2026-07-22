@@ -1,0 +1,277 @@
+.projects-header {
+    margin-bottom: 1rem;
+}
+
+.projects-intro {
+    margin-bottom: 2rem;
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
+}
+
+.project-card {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--entry);
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-card:hover,
+.project-card:focus-within {
+    transform: translateY(-4px);
+    border-color: var(--secondary);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+html[data-theme="dark"] .project-card:hover,
+html[data-theme="dark"] .project-card:focus-within {
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+}
+
+.project-card-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 1.25rem;
+}
+
+.project-card-heading,
+.project-title-row,
+.project-log-title-row,
+.project-logs-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.8rem;
+}
+
+.project-card-heading {
+    align-items: flex-start;
+}
+
+.project-card h2 {
+    margin: 0;
+    font-size: 1.35rem;
+    line-height: 1.25;
+}
+
+.project-card-description {
+    margin: 0.8rem 0 1rem;
+    color: var(--secondary);
+    line-height: 1.6;
+}
+
+.project-status,
+.project-version {
+    display: inline-flex;
+    align-items: center;
+    flex: none;
+    min-height: 1.65rem;
+    padding: 0.15rem 0.55rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.project-status--active {
+    color: #2f8f58;
+    border-color: rgba(47, 143, 88, 0.45);
+    background: rgba(47, 143, 88, 0.1);
+}
+
+.project-status--archived {
+    color: var(--secondary);
+    background: rgba(128, 128, 128, 0.1);
+}
+
+.project-updated {
+    margin: auto 0 0;
+    padding-top: 1.15rem;
+    color: var(--secondary);
+    font-size: 0.78rem;
+}
+
+.project-card-link {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+}
+
+.project-card-link:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: -4px;
+}
+
+.project-hero {
+    margin-bottom: 1.5rem;
+}
+
+.project-title-row {
+    justify-content: flex-start;
+    align-items: baseline;
+}
+
+.project-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin: 1.25rem 0;
+}
+
+.project-actions a {
+    padding: 0.48rem 0.85rem;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    background: var(--entry);
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.project-actions a:hover,
+.project-actions a:focus-visible {
+    border-color: var(--secondary);
+    background: var(--code-bg);
+}
+
+.project-logs {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+}
+
+.project-logs-header h2 {
+    margin: 0;
+    font-size: 1.55rem;
+}
+
+.project-logs-header span {
+    color: var(--secondary);
+    font-size: 0.82rem;
+}
+
+.project-timeline {
+    position: relative;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.project-timeline::before {
+    content: "";
+    position: absolute;
+    top: 0.6rem;
+    bottom: 0.6rem;
+    left: 0.3rem;
+    width: 1px;
+    background: var(--border);
+}
+
+.project-timeline > li {
+    position: relative;
+    padding-left: 1.7rem;
+}
+
+.project-timeline > li + li {
+    margin-top: 1.6rem;
+}
+
+.project-timeline > li::before {
+    content: "";
+    position: absolute;
+    top: 0.45rem;
+    left: 0;
+    width: 0.65rem;
+    height: 0.65rem;
+    border: 2px solid var(--theme);
+    border-radius: 50%;
+    background: var(--secondary);
+}
+
+.project-log-entry {
+    display: grid;
+    grid-template-columns: 7rem minmax(0, 1fr);
+    gap: 1rem;
+}
+
+.project-log-entry > time {
+    padding-top: 0.15rem;
+    color: var(--secondary);
+    font-size: 0.82rem;
+}
+
+.project-log-title-row {
+    justify-content: flex-start;
+}
+
+.project-log-title-row h3 {
+    margin: 0;
+    font-size: 1.05rem;
+}
+
+.project-log-entry p {
+    margin: 0.45rem 0 0;
+    color: var(--secondary);
+    line-height: 1.55;
+}
+
+.project-version {
+    color: var(--secondary);
+    background: var(--code-bg);
+}
+
+.project-back-link {
+    display: inline-block;
+    margin-bottom: 1.35rem;
+    color: var(--secondary);
+    font-size: 0.88rem;
+}
+
+.project-log-kicker {
+    margin: 0 0 0.5rem;
+    color: var(--secondary);
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.projects-empty {
+    padding: 1.4rem;
+    border: 1px dashed var(--border);
+    border-radius: var(--radius);
+    color: var(--secondary);
+    text-align: center;
+}
+
+@media (max-width: 700px) {
+    .project-log-entry {
+        grid-template-columns: 1fr;
+        gap: 0.35rem;
+    }
+
+    .project-title-row {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .project-card,
+    .project-actions a {
+        transition: none;
+    }
+
+    .project-card:hover,
+    .project-card:focus-within {
+        transform: none;
+    }
+}
