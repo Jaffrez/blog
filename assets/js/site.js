@@ -180,6 +180,90 @@
     });
   }
 
+  function initTableOfContents() {
+    document.querySelectorAll("details.toc").forEach((details) => {
+      const summary = details.querySelector(":scope > summary");
+      const content = details.querySelector(":scope > .inner");
+      if (!summary || !content) {
+        return;
+      }
+
+      let contentInner = content.querySelector(":scope > .toc-content-inner");
+      if (!contentInner) {
+        contentInner = document.createElement("div");
+        contentInner.className = "toc-content-inner";
+        while (content.firstChild) {
+          contentInner.appendChild(content.firstChild);
+        }
+        content.appendChild(contentInner);
+      }
+
+      contentInner.querySelectorAll("li").forEach((item) => {
+        const hasDirectLink = item.querySelector(":scope > a");
+        const hasNestedList = item.querySelector(":scope > ul");
+        item.classList.toggle("toc-branch", Boolean(hasNestedList && !hasDirectLink));
+      });
+
+      let isAnimating = false;
+      let animationTimer;
+
+      function clearAnimationStyles() {
+        content.style.removeProperty("transition");
+        content.style.removeProperty("height");
+        content.style.removeProperty("overflow");
+      }
+
+      summary.addEventListener(
+        "click",
+        (event) => {
+          event.preventDefault();
+          if (isAnimating) {
+            return;
+          }
+
+          const isClosing = details.open;
+          if (prefersReducedMotion()) {
+            details.open = !isClosing;
+            clearAnimationStyles();
+            return;
+          }
+
+          isAnimating = true;
+          let expandedHeight;
+
+          function finishAnimation() {
+            window.clearTimeout(animationTimer);
+            if (isClosing) {
+              details.open = false;
+            }
+            clearAnimationStyles();
+            isAnimating = false;
+          }
+
+          content.style.overflow = "hidden";
+          content.style.transition = "height 180ms ease";
+
+          if (isClosing) {
+            content.style.height = `${content.getBoundingClientRect().height}px`;
+          } else {
+            content.style.height = "auto";
+            expandedHeight = content.getBoundingClientRect().height;
+            content.style.height = "0px";
+            details.open = true;
+          }
+
+          content.getBoundingClientRect();
+          animationTimer = window.setTimeout(finishAnimation, 190);
+
+          window.requestAnimationFrame(() => {
+            content.style.height = isClosing ? "0px" : `${expandedHeight}px`;
+          });
+        },
+        true
+      );
+    });
+  }
+
   function getGiscusTheme() {
     return document.documentElement.dataset.theme === "light" ? "noborder_light" : "noborder_dark";
   }
@@ -246,6 +330,7 @@
     initNotFoundPath();
     initCodeCopyButtons();
     initCopyrightDetails();
+    initTableOfContents();
     initGiscusThemeSync();
   });
 })();

@@ -311,8 +311,21 @@ html[data-theme="dark"] .post-entry:hover {
 
 .toc .inner {
     margin-top: 0;
-    padding: 1rem 0 0;
+    padding: 0;
+    border-top: 0;
+}
+
+details.toc::details-content {
+    transition: none;
+}
+
+.toc-content-inner {
+    padding-top: 1rem;
     border-top: 1px solid var(--border);
+}
+
+.toc li.toc-branch {
+    list-style: none;
 }
 
 .copy-details {
