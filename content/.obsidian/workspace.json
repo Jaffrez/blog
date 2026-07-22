@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "295b5dd28adb4591",
+        "id": "be38a410486150e2",
         "type": "tabs",
         "children": [
           {
-            "id": "73f9caea1914f026",
+            "id": "46892776f608c439",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -176,8 +176,11 @@
       "bases:新建数据库": false
     }
   },
-  "active": "909b7bd50b1b1358",
+  "active": "46892776f608c439",
   "lastOpenFiles": [
+    "projects/qinghe/2026-07-22-first.md",
+    "projects/qinghe/_index.md",
+    "projects/qinghe",
     "posts/安装使用GNU target的Rust.md",
     "posts/纪念更换域名.md",
     "posts/解决windows下nvim-treesitter无法正常下载解析器.md",
