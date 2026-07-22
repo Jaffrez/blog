@@ -38,6 +38,15 @@ button:focus-visible {
     color: var(--secondary);
 }
 
+.main .about-profile {
+    min-height: clamp(360px, 58vh, 560px);
+}
+
+.about-details {
+    padding-top: var(--gap);
+    border-top: 1px solid var(--border);
+}
+
 .post-meta,
 .entry-footer,
 .footer {

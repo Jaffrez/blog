@@ -1,0 +1,33 @@
+{{- define "main" }}
+
+<div class="profile about-profile">
+  <div class="profile_inner">
+    {{- with .Params.avatar }}
+    <img draggable="false"
+         src="{{ . | safeURL }}"
+         alt="{{ $.Params.avatarAlt | default "头像" }}"
+         title="{{ $.Params.avatarAlt | default "头像" }}"
+         width="150"
+         height="150"
+         loading="eager"
+         decoding="async">
+    {{- end }}
+    <h1>{{ .Params.profileTitle | default .Title }}</h1>
+    {{- with .Params.profileSubtitle }}
+    <span>{{ . | markdownify }}</span>
+    {{- end }}
+    {{- partial "social_icons.html" -}}
+  </div>
+</div>
+
+{{- with .Content }}
+<article class="about-details">
+  <div class="post-content md-content">
+    {{- if not ($.Param "disableAnchoredHeadings") }}
+    {{- partial "anchored_headings.html" . -}}
+    {{- else }}{{ . }}{{ end }}
+  </div>
+</article>
+{{- end }}
+
+{{- end }}
