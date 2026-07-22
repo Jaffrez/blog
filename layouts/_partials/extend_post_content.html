@@ -1,0 +1,8 @@
+{{- if eq .Section "posts" }}
+  {{- with site.Params.integrations.mediumZoom }}
+    {{- if and .enabled .scriptURL }}
+<script defer src="{{ .scriptURL | safeURL }}"></script>
+    {{- end }}
+  {{- end }}
+  {{- partial "post_copyright.html" . }}
+{{- end }}

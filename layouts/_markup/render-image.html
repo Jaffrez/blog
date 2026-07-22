@@ -1,0 +1,28 @@
+{{- $url := urls.Parse .Destination -}}
+{{- $src := $url.String -}}
+{{- if not $url.IsAbs -}}
+  {{- $path := strings.TrimPrefix "./" $url.Path }}
+  {{- with or (.PageInner.Resources.Get $path) (resources.Get $path) -}}
+    {{- $src = .RelPermalink -}}
+    {{- with $url.RawQuery -}}
+      {{- $src = printf "%s?%s" $src . -}}
+    {{- end -}}
+    {{- with $url.Fragment -}}
+      {{- $src = printf "%s#%s" $src . -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $attributes := merge .Attributes (dict "alt" .Text "src" $src "title" (.Title | transform.HTMLEscape) "loading" "lazy" "decoding" "async") -}}
+<figure class="post-figure">
+  <div class="post-img-view">
+    <img
+      {{- range $key, $value := $attributes }}
+        {{- if $value }}
+          {{- printf " %s=%q" $key $value | safeHTMLAttr }}
+        {{- end }}
+      {{- end }}>
+  </div>
+  {{- with .Text }}
+  <figcaption class="post-caption">{{ . | safeHTML }}</figcaption>
+  {{- end }}
+</figure>

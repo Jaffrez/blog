@@ -1,0 +1,11 @@
+{{- if not (.Param "disableCopyright") }}
+<details class="copy-details">
+  <summary>版权信息（点此展开）</summary>
+  <div class="copy-content">
+    <p>标题：{{ .Title }}</p>
+    <p>作者：{{ site.Params.author | default site.Title }}</p>
+    <p>链接：<a href="{{ .Permalink }}">{{ .Permalink }}</a></p>
+    <p>协议：<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a></p>
+  </div>
+</details>
+{{- end }}

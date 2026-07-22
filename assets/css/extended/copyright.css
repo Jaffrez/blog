@@ -1,0 +1,38 @@
+/* 1. 容器：仅显示一条极淡的顶部分割线 */
+.copy-details {
+    margin-top: 2rem;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(128, 128, 128, 0.2); /* 极淡的虚线 */
+    font-size: 0.8rem;
+    color: var(--secondary);
+}
+
+/* 2. 折叠标题：在 Firefox 中隐藏小箭头并弱化文字 */
+.copy-details summary {
+    cursor: pointer;
+    list-style: none;         /* Firefox 隐藏箭头 */
+    display: block;           /* Firefox 隐藏箭头补充 */
+    opacity: 0.5;             /* 默认半透明，极不显眼 */
+}
+
+/* 兼容 Chrome/Safari 隐藏箭头 */
+.copy-details summary::-webkit-details-marker {
+    display: none;
+}
+
+/* 鼠标悬停才显示出来 */
+.copy-details summary:hover {
+    opacity: 1;
+}
+
+/* 3. 展开后的内容：紧凑排版 */
+.copy-content {
+    margin-top: 8px;
+    padding-left: 0;
+    line-height: 1.4;
+    opacity: 0.8;
+}
+
+.copy-content p {
+    margin: 2px 0; /* 减小行间距 */
+}

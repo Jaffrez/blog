@@ -1,0 +1,203 @@
+.terminal-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    padding: 20px;
+    overflow: hidden;
+    font-family: sans-serif;
+}
+
+.bg-text {
+    position: relative;
+    font-size: clamp(6rem, 15vw, 10rem);
+    font-family: "LXGW WenKai", "LXGW WenKai Screen", sans-serif;
+    font-weight: 900;
+    color: var(--primary, #555);
+    opacity: 0.15;
+    z-index: 0;
+    user-select: none;
+    pointer-events: none;
+    line-height: 1;
+    text-align: center;
+    margin-bottom: -2rem;
+}
+
+.terminal-window {
+    width: 100%;
+    max-width: 650px;
+    background: #1a1b26;
+    border-radius: 10px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-family: "Maple Mono", "Cascadia Code", monospace;
+}
+
+.terminal-header {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+}
+
+.window-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.control {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.close {
+    background: #ff5f56;
+}
+
+.minimize {
+    background: #ffbd2e;
+}
+
+.maximize {
+    background: #27c93f;
+}
+
+.window-title {
+    margin: 0 auto;
+    font-size: 0.75rem;
+    color: #565f89;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding-right: 40px;
+}
+
+.terminal-content {
+    padding: 25px;
+    line-height: 1.6;
+    font-size: 0.9rem;
+    color: #a9b1d6;
+    text-align: left;
+}
+
+.command-line {
+    overflow-wrap: anywhere;
+}
+
+.prompt-arrow {
+    color: #9ece6a;
+    margin-right: 5px;
+}
+
+.prompt-dir {
+    color: #7aa2f7;
+    margin-right: 5px;
+}
+
+.prompt-cmd {
+    color: #bb9af7;
+}
+
+.path-arg {
+    color: #e0af68;
+    overflow-wrap: anywhere;
+}
+
+.error-msg {
+    color: #f7768e;
+    margin: 15px 0;
+    font-family: inherit;
+}
+
+.error-badge {
+    background: #f7768e;
+    color: #1a1b26;
+    padding: 0 4px;
+    margin-right: 5px;
+    font-weight: bold;
+    font-size: 0.8em;
+}
+
+.comment {
+    font-style: italic;
+    opacity: 0.9;
+}
+
+.sys-msg {
+    color: #565f89;
+    font-style: italic;
+    margin-bottom: 20px;
+    font-size: 0.85rem;
+}
+
+.input-line {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.cmd-link {
+    color: #7aa2f7;
+    text-decoration: none;
+    border: 1px dashed #7aa2f7;
+    padding: 2px 10px;
+    border-radius: 4px;
+    transition: all 0.2s;
+    background: transparent;
+}
+
+.cmd-link:hover {
+    background: rgba(122, 162, 247, 0.15);
+    border-style: solid;
+    box-shadow: 0 0 12px rgba(122, 162, 247, 0.3);
+    transform: translateY(-1px);
+    color: #7aa2f7;
+}
+
+.cursor {
+    color: #7aa2f7;
+    animation: blink 1s infinite;
+    font-weight: bold;
+    margin-left: 2px;
+}
+
+@keyframes blink {
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cmd-link {
+        transition: none;
+    }
+
+    .cursor {
+        animation: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .terminal-window {
+        width: 95%;
+    }
+
+    .terminal-content {
+        font-size: 0.8rem;
+        padding: 15px;
+    }
+
+    .bg-text {
+        font-size: 6rem;
+        margin-bottom: -1rem;
+    }
+}

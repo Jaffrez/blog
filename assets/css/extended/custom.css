@@ -1,0 +1,345 @@
+body,
+header,
+footer,
+article,
+.entry-header,
+.entry-content,
+.post-content {
+    transition: background-color 0.5s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+::selection {
+    background: rgba(122, 162, 247, 0.28);
+}
+
+a:focus-visible,
+button:focus-visible {
+    outline: 2px solid var(--secondary);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+#menu a {
+    transition: opacity 0.2s ease, box-shadow 0.2s ease;
+}
+
+#menu a:hover {
+    opacity: 0.82;
+    box-shadow: 0 1px 0 var(--secondary);
+}
+
+.post-title {
+    line-height: 1.16;
+    letter-spacing: -0.02em;
+}
+
+.post-description {
+    margin-top: 12px;
+    color: var(--secondary);
+}
+
+.post-meta,
+.entry-footer,
+.footer {
+    opacity: 0.84;
+}
+
+.post-content {
+    line-height: 1.78;
+}
+
+.post-content p {
+    margin-bottom: 1.15rem;
+}
+
+.post-content h2 {
+    margin-top: 2.4rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.28rem;
+    border-bottom: 1px solid var(--border);
+    letter-spacing: -0.015em;
+}
+
+.post-content h3 {
+    margin-top: 2rem;
+    margin-bottom: 0.85rem;
+}
+
+.post-content a {
+    box-shadow: none;
+    text-decoration-line: underline;
+    text-decoration-thickness: 0.06em;
+    text-underline-offset: 0.18em;
+    text-decoration-color: var(--secondary);
+}
+
+.post-content a:hover {
+    text-decoration-thickness: 0.09em;
+    text-decoration-color: currentColor;
+}
+
+.post-content blockquote {
+    border-inline-start-color: var(--secondary);
+    background: rgba(128, 128, 128, 0.06);
+    opacity: 0.92;
+}
+
+.post-content table th {
+    color: var(--primary);
+    background: var(--code-bg);
+}
+
+.post-content table th,
+.post-content table:not(.highlighttable, .highlight table, .gist .highlight) td {
+    padding: 10px 8px;
+}
+
+summary .details,
+summary span.details,
+.toc summary,
+.toc .details {
+    cursor: pointer !important;
+    pointer-events: auto !important;
+}
+
+/* Code block folding */
+.post-content div.highlight.is-collapsible {
+    position: relative;
+    overflow: hidden;
+    max-height: var(--code-expanded-height);
+    transition: max-height 0.4s ease-in-out;
+}
+
+.post-content div.highlight.is-collapsed {
+    max-height: 300px;
+}
+
+.post-content div.highlight.is-expanded {
+    max-height: var(--code-expanded-height);
+}
+
+.code-control-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 10px;
+    z-index: 5;
+    background: linear-gradient(to bottom, transparent 0%, var(--entry) 90%);
+    border-bottom-left-radius: var(--radius);
+    border-bottom-right-radius: var(--radius);
+    transition: background 0.3s ease, height 0.3s ease;
+}
+
+.code-control-bar.is-expanded {
+    background: transparent;
+    height: 40px;
+    pointer-events: none;
+}
+
+.code-toggle-btn {
+    pointer-events: auto;
+    background: var(--entry);
+    color: var(--primary);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-family: inherit;
+    cursor: pointer;
+    opacity: 0.88;
+    box-shadow: none;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.code-toggle-btn:hover {
+    background: var(--code-bg);
+    color: var(--primary);
+    border-color: var(--secondary);
+    opacity: 1;
+}
+
+.code-toggle-btn:active {
+    transform: translateY(0);
+}
+
+.copy-code {
+    display: block;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    font-size: 0;
+    line-height: 0;
+    color: rgba(255, 255, 255, 0.82);
+    background: rgba(78, 78, 78, 0.68);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    opacity: 0.76;
+    transition: opacity 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.copy-code::before,
+.copy-code::after {
+    content: "";
+    position: absolute;
+    box-sizing: border-box;
+    top: 50%;
+    left: 50%;
+    background: currentColor;
+}
+
+.copy-code::before {
+    width: 15px;
+    height: 15px;
+    transform: translate(-50%, -50%);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='8' y='8' width='12' height='12' rx='2'/%3E%3Cpath d='M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='8' y='8' width='12' height='12' rx='2'/%3E%3Cpath d='M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.copy-code::after {
+    display: none;
+}
+
+.copy-code:hover,
+.copy-code:focus-visible {
+    opacity: 1;
+    background: rgba(78, 78, 78, 0.84);
+}
+
+.copy-code:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+.copy-code.is-copied {
+    color: rgba(180, 230, 180, 0.95);
+}
+
+.copy-code.is-copied::before {
+    width: 16px;
+    height: 16px;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 13 4 4L19 7'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 13 4 4L19 7'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.copy-code.is-copied::after {
+    opacity: 0;
+}
+
+/* Markdown images */
+.post-figure {
+    margin: 1.45rem 0;
+    text-align: center;
+    display: block;
+}
+
+.post-caption {
+    margin-top: 9px;
+    font-family: inherit;
+    font-size: 0.78em !important;
+    font-weight: normal !important;
+    font-style: normal;
+    opacity: 0.56;
+    color: var(--secondary);
+    text-align: center;
+    line-height: 1.35;
+    display: block;
+}
+
+.post-figure img {
+    margin: 0 auto;
+    display: block;
+    border-radius: var(--radius);
+    transition: box-shadow 0.18s ease;
+}
+
+.post-content .post-img-view img,
+.medium-zoom-image {
+    cursor: pointer !important;
+}
+
+.post-content .post-img-view:hover img:not(.medium-zoom-image--opened),
+.medium-zoom-image:hover:not(.medium-zoom-image--opened) {
+    box-shadow: 0 0 0 2px rgba(128, 128, 128, 0.24), 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+html[data-theme="dark"] .post-content .post-img-view:hover img:not(.medium-zoom-image--opened),
+html[data-theme="dark"] .medium-zoom-image:hover:not(.medium-zoom-image--opened) {
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.15), 0 10px 24px rgba(0, 0, 0, 0.2);
+}
+
+.medium-zoom-image--opened,
+.medium-zoom-overlay {
+    cursor: pointer !important;
+}
+
+/* Post list motion */
+.post-entry {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: var(--radius);
+}
+
+.post-entry:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    background: var(--entry);
+    z-index: 1;
+}
+
+html[data-theme="dark"] .post-entry:hover {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.entry-header h2 {
+    letter-spacing: -0.01em;
+}
+
+.entry-content {
+    margin-top: 10px;
+}
+
+.toc {
+    border-color: var(--border);
+}
+
+.toc .inner {
+    margin-top: 0.45rem;
+    padding-top: 0.55rem;
+    border-top: 1px solid var(--border);
+}
+
+.copy-details {
+    border-top-color: var(--border);
+}
+
+.giscus {
+    margin-top: 2rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body,
+    header,
+    footer,
+    article,
+    .entry-header,
+    .entry-content,
+    .post-content,
+    .post-entry,
+    .post-figure img,
+    .code-toggle-btn,
+    #menu a,
+    .copy-code {
+        transition: none !important;
+    }
+
+    .post-entry:hover {
+        transform: none !important;
+    }
+}

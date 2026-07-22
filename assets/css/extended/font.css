@@ -1,0 +1,20 @@
+:root {
+    --main-font-family: "LXGW WenKai Screen", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --code-font-family: "Maple Mono", "Menlo", "Monaco", "Consolas", "Courier New", monospace;
+}
+
+html, body {
+    font-family: var(--main-font-family);
+}
+
+code, kbd, pre, samp {
+    font-family: var(--code-font-family) !important;
+}
+
+.post-content pre, .post-content code {
+    font-family: var(--code-font-family) !important;
+}
+
+.chroma .lntd {
+    font-family: var(--code-font-family) !important;
+}

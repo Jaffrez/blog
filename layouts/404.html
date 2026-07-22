@@ -1,0 +1,43 @@
+{{ define "main" }}
+<div class="terminal-container">
+    <div class="bg-text" aria-hidden="true">404</div>
+
+    <div class="terminal-window" role="region" aria-label="404 error terminal">
+        <div class="terminal-header">
+            <div class="window-controls" aria-hidden="true">
+                <div class="control close"></div>
+                <div class="control minimize"></div>
+                <div class="control maximize"></div>
+            </div>
+            <div class="window-title">zsh — error_log</div>
+        </div>
+
+        <div class="terminal-content">
+            <div class="command-line">
+                <span class="prompt-arrow">➜</span>
+                <span class="prompt-dir">~</span>
+                <span class="prompt-cmd">python3</span> locate_page.py --path <span id="current-path" class="path-arg" aria-live="polite">/loading...</span>
+            </div>
+
+            <div class="error-msg">
+                <span class="error-badge">ERROR</span>
+                <span class="comment"># FileNotFoundError: Page exists only in imagination.</span>
+            </div>
+
+            <div class="sys-msg">
+                # Recommendation: Return to stable reality.<br>
+                # Traceback: [Dimension_Shift, Link_Rot, Coffee_Spill]
+            </div>
+
+            <div class="input-line">
+                <span class="prompt-arrow">➜</span>
+                <span class="prompt-dir">~</span>
+                <a href="{{ "" | absLangURL }}" class="cmd-link" aria-label="Return to home page">
+                    cd /home && ./stay_safe.sh
+                </a>
+                <span class="cursor">_</span>
+            </div>
+        </div>
+    </div>
+</div>
+{{ end }}

@@ -1,0 +1,20 @@
+{{- with site.Params.integrations.giscus }}
+  {{- if and .enabled .scriptURL .repo .repoID .category .categoryID }}
+<script src="{{ .scriptURL | safeURL }}"
+        data-repo="{{ .repo }}"
+        data-repo-id="{{ .repoID }}"
+        data-category="{{ .category }}"
+        data-category-id="{{ .categoryID }}"
+        data-mapping="{{ .mapping | default "title" }}"
+        data-strict="{{ .strict | default "1" }}"
+        data-reactions-enabled="{{ .reactionsEnabled | default "1" }}"
+        data-emit-metadata="{{ .emitMetadata | default "0" }}"
+        data-input-position="{{ .inputPosition | default "top" }}"
+        data-theme="{{ .theme | default "noborder_dark" }}"
+        data-lang="{{ .lang | default "zh-CN" }}"
+        data-loading="{{ .loading | default "lazy" }}"
+        crossorigin="anonymous"
+        async>
+</script>
+  {{- end }}
+{{- end }}
