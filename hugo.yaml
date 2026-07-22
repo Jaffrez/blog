@@ -65,11 +65,6 @@ params:
     text: "Analytics by [Umami](https://umami.is)"
 
   integrations:
-    fonts:
-      enabled: true
-      stylesheets:
-        - "https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.7.0/style.min.css"
-        - "https://cdn.jsdelivr.net/npm/@fontsource/maple-mono@5.2.6/index.min.css"
     mediumZoom:
       enabled: true
       scriptURL: "https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js"
@@ -85,9 +80,7 @@ params:
       reactionsEnabled: "1"
       emitMetadata: "0"
       inputPosition: "top"
-      theme: "noborder_dark"
       lang: "zh-CN"
-      loading: "lazy"
     umami:
       enabled: true
       scriptURL: "https://cloud.umami.is/script.js"

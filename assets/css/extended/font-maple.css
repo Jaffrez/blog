@@ -1,0 +1,8 @@
+/* Maple Mono 5.2.6, licensed under the SIL Open Font License 1.1. */
+@font-face {
+    font-family: "Maple Mono";
+    font-style: normal;
+    font-display: swap;
+    font-weight: 400;
+    src: url("/fonts/maple-mono/maple-mono-latin-400-normal.woff2") format("woff2");
+}

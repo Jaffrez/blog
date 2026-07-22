@@ -1,11 +1,3 @@
-{{- with site.Params.integrations.fonts }}
-  {{- if .enabled }}
-    {{- range .stylesheets }}
-<link rel="stylesheet" href="{{ . | safeURL }}">
-    {{- end }}
-  {{- end }}
-{{- end }}
-
 {{- if eq .Kind "404" }}
   {{- with resources.Get "css/404.css" }}
     {{- $notFoundCSS := . | minify | fingerprint }}

@@ -1,20 +1,21 @@
 {{- with site.Params.integrations.giscus }}
   {{- if and .enabled .scriptURL .repo .repoID .category .categoryID }}
-<script src="{{ .scriptURL | safeURL }}"
-        data-repo="{{ .repo }}"
-        data-repo-id="{{ .repoID }}"
-        data-category="{{ .category }}"
-        data-category-id="{{ .categoryID }}"
-        data-mapping="{{ .mapping | default "title" }}"
-        data-strict="{{ .strict | default "1" }}"
-        data-reactions-enabled="{{ .reactionsEnabled | default "1" }}"
-        data-emit-metadata="{{ .emitMetadata | default "0" }}"
-        data-input-position="{{ .inputPosition | default "top" }}"
-        data-theme="{{ .theme | default "noborder_dark" }}"
-        data-lang="{{ .lang | default "zh-CN" }}"
-        data-loading="{{ .loading | default "lazy" }}"
-        crossorigin="anonymous"
-        async>
-</script>
+<section class="giscus-loader"
+         aria-label="评论"
+         data-script-url="{{ .scriptURL | safeURL }}"
+         data-repo="{{ .repo }}"
+         data-repo-id="{{ .repoID }}"
+         data-category="{{ .category }}"
+         data-category-id="{{ .categoryID }}"
+         data-mapping="{{ .mapping | default "title" }}"
+         data-strict="{{ .strict | default "1" }}"
+         data-reactions-enabled="{{ .reactionsEnabled | default "1" }}"
+         data-emit-metadata="{{ .emitMetadata | default "0" }}"
+         data-input-position="{{ .inputPosition | default "top" }}"
+         data-lang="{{ .lang | default "zh-CN" }}">
+  <p class="giscus-status" role="status">评论将在接近此处时加载。</p>
+  <button class="giscus-retry" type="button" hidden>重新加载评论</button>
+  <noscript><p class="giscus-noscript">请启用 JavaScript 以查看评论。</p></noscript>
+</section>
   {{- end }}
 {{- end }}

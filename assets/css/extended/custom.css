@@ -332,8 +332,42 @@ details.toc::details-content {
     border-top-color: var(--border);
 }
 
-.giscus {
+.giscus-loader {
     margin-top: 2rem;
+    min-height: 4rem;
+}
+
+.giscus-loader .giscus {
+    margin-top: 0;
+}
+
+.giscus-status,
+.giscus-noscript {
+    margin: 1rem 0;
+    color: var(--secondary);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.giscus-retry {
+    display: block;
+    margin: 0.75rem auto;
+    padding: 0.45rem 0.9rem;
+    color: var(--primary);
+    font: inherit;
+    font-size: 0.9rem;
+    background: var(--entry);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+}
+
+.giscus-retry[hidden] {
+    display: none;
+}
+
+.giscus-retry:hover {
+    border-color: var(--secondary);
 }
 
 @media (prefers-reduced-motion: reduce) {

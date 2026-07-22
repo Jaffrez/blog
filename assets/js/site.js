@@ -268,51 +268,49 @@
     return document.documentElement.dataset.theme === "light" ? "noborder_light" : "noborder_dark";
   }
 
-  function updateGiscusTheme() {
-    const theme = getGiscusTheme();
-    const giscusScript = document.querySelector('script[src^="https://giscus.app/client.js"]');
-    if (giscusScript) {
-      giscusScript.setAttribute("data-theme", theme);
+  function getGiscusOrigin(loader) {
+    try {
+      return new URL(loader.dataset.scriptUrl, window.location.href).origin;
+    } catch (_error) {
+      return "https://giscus.app";
     }
-
-    const giscusFrame = document.querySelector("iframe.giscus-frame");
-    if (!giscusFrame || !giscusFrame.contentWindow) {
-      return;
-    }
-
-    giscusFrame.contentWindow.postMessage(
-      {
-        giscus: {
-          setConfig: {
-            theme,
-          },
-        },
-      },
-      "https://giscus.app"
-    );
   }
 
-  function initGiscusThemeSync() {
-    const giscusScript = document.querySelector('script[src^="https://giscus.app/client.js"]');
-    if (!giscusScript) {
-      return;
-    }
+  function updateGiscusTheme() {
+    const theme = getGiscusTheme();
 
-    updateGiscusTheme();
+    document.querySelectorAll(".giscus-loader").forEach((loader) => {
+      const script = loader.querySelector("script[data-giscus-script]");
+      if (script) {
+        script.setAttribute("data-theme", theme);
+      }
 
-    const themeObserver = new MutationObserver(updateGiscusTheme);
-    themeObserver.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["data-theme"],
+      const frame = loader.querySelector("iframe.giscus-frame");
+      if (!frame || !frame.contentWindow) {
+        return;
+      }
+
+      frame.contentWindow.postMessage(
+        {
+          giscus: {
+            setConfig: {
+              theme,
+            },
+          },
+        },
+        getGiscusOrigin(loader)
+      );
     });
+  }
 
-    if (document.querySelector("iframe.giscus-frame")) {
+  function watchForGiscusFrame(loader) {
+    if (loader.querySelector("iframe.giscus-frame")) {
       updateGiscusTheme();
       return;
     }
 
     const frameObserver = new MutationObserver(() => {
-      if (!document.querySelector("iframe.giscus-frame")) {
+      if (!loader.querySelector("iframe.giscus-frame")) {
         return;
       }
 
@@ -320,8 +318,117 @@
       frameObserver.disconnect();
     });
 
-    frameObserver.observe(document.body, { childList: true, subtree: true });
-    window.setTimeout(() => frameObserver.disconnect(), 10000);
+    frameObserver.observe(loader, { childList: true, subtree: true });
+    window.setTimeout(() => frameObserver.disconnect(), 15000);
+  }
+
+  function loadGiscus(loader) {
+    if (loader.dataset.state === "loading" || loader.dataset.state === "loaded") {
+      return;
+    }
+
+    const status = loader.querySelector(".giscus-status");
+    const retry = loader.querySelector(".giscus-retry");
+    if (!status || !retry || !loader.dataset.scriptUrl) {
+      return;
+    }
+
+    loader.querySelectorAll("script[data-giscus-script], .giscus").forEach((element) => element.remove());
+    loader.dataset.state = "loading";
+    status.hidden = false;
+    status.textContent = "评论加载中…";
+    retry.hidden = true;
+
+    const script = document.createElement("script");
+    const attributes = [
+      ["repo", "data-repo"],
+      ["repoId", "data-repo-id"],
+      ["category", "data-category"],
+      ["categoryId", "data-category-id"],
+      ["mapping", "data-mapping"],
+      ["strict", "data-strict"],
+      ["reactionsEnabled", "data-reactions-enabled"],
+      ["emitMetadata", "data-emit-metadata"],
+      ["inputPosition", "data-input-position"],
+      ["lang", "data-lang"],
+    ];
+
+    script.src = loader.dataset.scriptUrl;
+    script.async = true;
+    script.crossOrigin = "anonymous";
+    script.dataset.giscusScript = "true";
+    script.setAttribute("data-theme", getGiscusTheme());
+
+    attributes.forEach(([property, attribute]) => {
+      if (loader.dataset[property]) {
+        script.setAttribute(attribute, loader.dataset[property]);
+      }
+    });
+
+    script.addEventListener(
+      "load",
+      () => {
+        loader.dataset.state = "loaded";
+        status.hidden = true;
+        retry.hidden = true;
+        watchForGiscusFrame(loader);
+      },
+      { once: true }
+    );
+
+    script.addEventListener(
+      "error",
+      () => {
+        script.remove();
+        loader.dataset.state = "error";
+        status.hidden = false;
+        status.textContent = "评论加载失败，请稍后重试。";
+        retry.hidden = false;
+      },
+      { once: true }
+    );
+
+    loader.appendChild(script);
+  }
+
+  function initGiscusLazyLoad() {
+    document.querySelectorAll(".giscus-loader").forEach((loader) => {
+      const retry = loader.querySelector(".giscus-retry");
+      if (retry) {
+        retry.addEventListener("click", () => loadGiscus(loader));
+      }
+
+      if (!("IntersectionObserver" in window)) {
+        loadGiscus(loader);
+        return;
+      }
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (!entries.some((entry) => entry.isIntersecting)) {
+            return;
+          }
+
+          observer.disconnect();
+          loadGiscus(loader);
+        },
+        { rootMargin: "600px 0px" }
+      );
+
+      observer.observe(loader);
+    });
+  }
+
+  function initGiscusThemeSync() {
+    if (!document.querySelector(".giscus-loader")) {
+      return;
+    }
+
+    const themeObserver = new MutationObserver(updateGiscusTheme);
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
   }
 
   ready(function () {
@@ -331,6 +438,7 @@
     initCodeCopyButtons();
     initCopyrightDetails();
     initTableOfContents();
+    initGiscusLazyLoad();
     initGiscusThemeSync();
   });
 })();
