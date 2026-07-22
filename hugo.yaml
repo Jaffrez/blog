@@ -52,8 +52,20 @@ params:
     hiddenInList: true
     hiddenInSingle: true
 
+  footer:
+    text: "Analytics by [Umami](https://umami.is)"
+
+  integrations:
+    umami:
+      enabled: true
+      scriptURL: "https://cloud.umami.is/script.js"
+      websiteID: "bc17e884-58c9-4281-9769-4a04d9887ade"
+
 markup:
   highlight:
     noClasses: false
     lineNos: true
     codeFences: true
+
+taxonomies:
+  tag: tags

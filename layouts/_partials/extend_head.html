@@ -1,0 +1,5 @@
+{{- with site.Params.integrations.umami }}
+  {{- if and hugo.IsProduction .enabled .scriptURL .websiteID }}
+<script defer src="{{ .scriptURL | safeURL }}" data-website-id="{{ .websiteID }}"></script>
+  {{- end }}
+{{- end }}
