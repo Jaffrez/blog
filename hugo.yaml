@@ -112,14 +112,18 @@ menu:
       name: "项目"
       pageRef: "/projects"
       weight: 20
+    - identifier: "friends"
+      name: "友链"
+      pageRef: "/friends"
+      weight: 30
     - identifier: "archives"
       name: "文章"
       pageRef: "/archives"
-      weight: 30
+      weight: 40
     - identifier: "about"
       name: "关于我"
       pageRef: "/about"
-      weight: 40
+      weight: 50
 
 outputs:
   home:

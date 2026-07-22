@@ -1,0 +1,89 @@
+{{- define "main" }}
+
+<header class="page-header friends-header">
+  {{- partial "breadcrumbs.html" . }}
+  <h1>{{ .Title }}</h1>
+  {{- with .Description }}
+  <div class="post-description">{{ . | markdownify }}</div>
+  {{- end }}
+</header>
+
+{{- $friends := hugo.Data.friends.friends | default (slice) }}
+{{- if $friends }}
+<section class="friend-grid" aria-label="友链列表">
+  {{- range $index, $friend := $friends }}
+    {{- $name := strings.TrimSpace ($friend.name | default "") }}
+    {{- $url := strings.TrimSpace ($friend.url | default "") }}
+    {{- if not $name }}
+      {{- errorf "data/friends.yaml: friends[%d].name is required" $index }}
+    {{- end }}
+    {{- if not $url }}
+      {{- errorf "data/friends.yaml: friends[%d].url is required" $index }}
+    {{- end }}
+    {{- $parsedURL := urls.Parse $url }}
+    {{- if and $url (or (not $parsedURL.IsAbs) (not (in (slice "http" "https") $parsedURL.Scheme)) (not $parsedURL.Host)) }}
+      {{- errorf "data/friends.yaml: friends[%d].url must be an absolute HTTP(S) URL" $index }}
+    {{- end }}
+    {{- $host := strings.TrimPrefix "www." $parsedURL.Host }}
+  <a class="friend-card" href="{{ $url | safeURL }}" target="_blank" rel="noopener noreferrer">
+    <span class="friend-avatar">
+      <span class="friend-avatar-fallback" aria-hidden="true">{{ substr $name 0 1 }}</span>
+      {{- with $friend.avatar }}
+      <img src="{{ . | safeURL }}" alt="{{ $name }} 的头像" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">
+      {{- end }}
+    </span>
+    <span class="friend-card-content">
+      <span class="friend-name">{{ $name }}</span>
+      <span class="friend-domain">{{ $host }}</span>
+      {{- with $friend.description }}
+      <span class="friend-description">{{ . }}</span>
+      {{- end }}
+    </span>
+  </a>
+  {{- end }}
+</section>
+{{- else }}
+<p class="friends-empty">友链还在整理中，稍后再来看看吧。</p>
+{{- end }}
+
+{{- $siteAvatar := "" }}
+{{- with site.Params.images }}
+  {{- if gt (len .) 0 }}{{ $siteAvatar = index . 0 }}{{ end }}
+{{- end }}
+<section class="friend-exchange" aria-labelledby="site-link-title">
+  <h2 id="site-link-title">本站信息</h2>
+  <div class="site-link-card">
+    <span class="friend-avatar site-link-avatar">
+      <span class="friend-avatar-fallback" aria-hidden="true">{{ substr site.Title 0 1 }}</span>
+      {{- with $siteAvatar }}
+      <img src="{{ . | relURL }}" alt="{{ site.Title }} 的头像" loading="lazy" decoding="async" onerror="this.remove()">
+      {{- end }}
+    </span>
+    <dl class="site-link-details">
+      <div><dt>名称</dt><dd>{{ site.Title }}</dd></div>
+      <div><dt>地址</dt><dd><a href="{{ site.BaseURL }}">{{ strings.TrimSuffix "/" site.BaseURL }}</a></dd></div>
+      {{- with site.Params.homeInfoParams.Content }}
+      <div><dt>简介</dt><dd>{{ . }}</dd></div>
+      {{- end }}
+      {{- with $siteAvatar }}
+      <div><dt>头像</dt><dd><a href="{{ . | absURL }}">{{ . | absURL }}</a></dd></div>
+      {{- end }}
+    </dl>
+  </div>
+</section>
+
+{{- with .Content }}
+<div class="post-content md-content friends-application">
+  {{- if not ($.Param "disableAnchoredHeadings") }}
+    {{- partial "anchored_headings.html" . }}
+  {{- else }}{{ . }}{{ end }}
+</div>
+{{- end }}
+
+{{- if (.Param "comments") }}
+<section class="friends-comments" aria-label="友链申请评论区">
+  {{- partial "comments.html" . }}
+</section>
+{{- end }}
+
+{{- end }}
