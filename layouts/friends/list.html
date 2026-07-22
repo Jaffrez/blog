@@ -8,21 +8,20 @@
   {{- end }}
 </header>
 
-{{- $friends := hugo.Data.friends.friends | default (slice) }}
+{{- $friends := hugo.Data.friends.friends | default (dict) }}
 {{- if $friends }}
 <section class="friend-grid" aria-label="友链列表">
-  {{- range $index, $friend := $friends }}
+  {{- range $url, $friend := $friends }}
     {{- $name := strings.TrimSpace ($friend.name | default "") }}
-    {{- $url := strings.TrimSpace ($friend.url | default "") }}
     {{- if not $name }}
-      {{- errorf "data/friends.yaml: friends[%d].name is required" $index }}
+      {{- errorf "data/friends.yaml: friend %q requires a name" $url }}
     {{- end }}
     {{- if not $url }}
-      {{- errorf "data/friends.yaml: friends[%d].url is required" $index }}
+      {{- errorf "data/friends.yaml: friend URL key is required" }}
     {{- end }}
     {{- $parsedURL := urls.Parse $url }}
     {{- if and $url (or (not $parsedURL.IsAbs) (not (in (slice "http" "https") $parsedURL.Scheme)) (not $parsedURL.Host)) }}
-      {{- errorf "data/friends.yaml: friends[%d].url must be an absolute HTTP(S) URL" $index }}
+      {{- errorf "data/friends.yaml: friend key %q must be an absolute HTTP(S) URL" $url }}
     {{- end }}
     {{- $host := strings.TrimPrefix "www." $parsedURL.Host }}
   <a class="friend-card" href="{{ $url | safeURL }}" target="_blank" rel="noopener noreferrer">

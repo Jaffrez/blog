@@ -1,5 +1,7 @@
 friends:
-  - name: "eryuemu's blog"
-    url: "https://eryuemu.com/"
-    avatar: "https://eryuemu.com/avatar.jpg"
+  "https://eryuemu.com/":
+    name: "eryuemu's blog"
+    avatar: "https://www.eryuemu.com/avatar.jpg"
     description: "事在人为，圆融自洽"
+    sync_avatar: false
+    sync_description: false

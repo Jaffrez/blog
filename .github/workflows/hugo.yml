@@ -5,12 +5,12 @@ on:
     branches: ["master"]
   pull_request:
     branches: ["master"]
+  schedule:
+    - cron: "17 2 1 * *"
   workflow_dispatch:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: "pages"
@@ -23,6 +23,10 @@ defaults:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
     env:
       HUGO_VERSION: 0.164.0
     steps:
@@ -34,7 +38,25 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
+          fetch-depth: 0
           submodules: recursive
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+          cache-dependency-path: scripts/requirements-friends-sync.txt
+
+      - name: Install friend sync dependencies
+        run: python -m pip install -r scripts/requirements-friends-sync.txt
+
+      - name: Test friend metadata sync
+        run: python -m unittest scripts/test_sync_friend_metadata.py
+
+      - name: Sync friend metadata
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/master')
+        run: python scripts/sync_friend_metadata.py
 
       - name: Setup Pages
         id: pages
@@ -54,6 +76,19 @@ jobs:
       - name: Check internal links
         run: python scripts/check_internal_links.py public "${{ steps.pages.outputs.base_url }}"
 
+      - name: Commit synchronized friend metadata
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/master')
+        run: |
+          if git diff --quiet -- data/friends.yaml; then
+            echo "Friend metadata is already up to date."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- data/friends.yaml
+          git commit -m "chore: sync friend metadata [skip ci]"
+          git push origin HEAD:master
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -61,6 +96,10 @@ jobs:
 
   deploy:
     if: github.event_name != 'pull_request'
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
