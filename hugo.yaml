@@ -15,6 +15,7 @@ params:
   mainSections:
     - "posts"
   author: "Jaffrez"
+  description: "一名热衷于计算机的学生。"
   comments: true
   keywords:
     - "blog"

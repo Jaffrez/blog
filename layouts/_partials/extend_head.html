@@ -1,3 +1,10 @@
+{{- with resources.Get "css/fonts.css" }}
+  {{- $fontsCSS := resources.Copy "assets/css/fonts.css" . }}
+  {{- $fontsCSS = $fontsCSS | minify | fingerprint }}
+<link crossorigin="anonymous" href="{{ $fontsCSS.RelPermalink }}" integrity="{{ $fontsCSS.Data.Integrity }}" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link crossorigin="anonymous" href="{{ $fontsCSS.RelPermalink }}" integrity="{{ $fontsCSS.Data.Integrity }}" rel="stylesheet"></noscript>
+{{- end }}
+
 {{- if eq .Kind "404" }}
   {{- with resources.Get "css/404.css" }}
     {{- $notFoundCSS := . | minify | fingerprint }}
