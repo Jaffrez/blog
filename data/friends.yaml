@@ -1,1 +1,5 @@
-friends: []
+friends:
+  - name: "eryuemu's blog"
+    url: "https://eryuemu.com/"
+    avatar: "https://eryuemu.com/avatar.jpg"
+    description: "事在人为，圆融自洽"
