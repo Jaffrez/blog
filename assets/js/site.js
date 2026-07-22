@@ -113,6 +113,73 @@
     document.querySelectorAll(".copy-code").forEach(enhanceButton);
   }
 
+  function initCopyrightDetails() {
+    document.querySelectorAll(".copy-details").forEach((container) => {
+      const control = container.querySelector(":scope > .copy-summary");
+      const content = container.querySelector(":scope > .copy-content");
+      if (!control || !content) {
+        return;
+      }
+
+      let isAnimating = false;
+      let animationTimer;
+
+      function clearAnimationStyles() {
+        content.style.removeProperty("transition");
+        content.style.removeProperty("height");
+        content.style.removeProperty("overflow");
+      }
+
+      control.addEventListener("click", () => {
+        if (isAnimating) {
+          return;
+        }
+
+        const isClosing = control.getAttribute("aria-expanded") === "true";
+        if (prefersReducedMotion()) {
+          control.setAttribute("aria-expanded", String(!isClosing));
+          content.hidden = isClosing;
+          clearAnimationStyles();
+          return;
+        }
+
+        isAnimating = true;
+
+        function finishAnimation() {
+          window.clearTimeout(animationTimer);
+          if (isClosing) {
+            content.hidden = true;
+          }
+          clearAnimationStyles();
+          isAnimating = false;
+        }
+
+        content.style.overflow = "hidden";
+        content.style.transition = "height 180ms ease";
+
+        let expandedHeight;
+
+        if (isClosing) {
+          content.style.height = `${content.getBoundingClientRect().height}px`;
+          control.setAttribute("aria-expanded", "false");
+        } else {
+          content.hidden = false;
+          content.style.height = "auto";
+          expandedHeight = content.getBoundingClientRect().height;
+          content.style.height = "0px";
+          control.setAttribute("aria-expanded", "true");
+        }
+
+        content.getBoundingClientRect();
+        animationTimer = window.setTimeout(finishAnimation, 190);
+
+        window.requestAnimationFrame(() => {
+          content.style.height = isClosing ? "0px" : `${expandedHeight}px`;
+        });
+      });
+    });
+  }
+
   function getGiscusTheme() {
     return document.documentElement.dataset.theme === "light" ? "noborder_light" : "noborder_dark";
   }
@@ -178,6 +245,7 @@
     initCollapsibleCodeBlocks();
     initNotFoundPath();
     initCodeCopyButtons();
+    initCopyrightDetails();
     initGiscusThemeSync();
   });
 })();

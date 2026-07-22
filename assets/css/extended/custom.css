@@ -310,8 +310,8 @@ html[data-theme="dark"] .post-entry:hover {
 }
 
 .toc .inner {
-    margin-top: 0.45rem;
-    padding-top: 0.55rem;
+    margin-top: 0;
+    padding: 1rem 0 0;
     border-top: 1px solid var(--border);
 }
 
