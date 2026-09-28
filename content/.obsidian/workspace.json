@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "6c2b0e69fb268c69",
+        "id": "b2f04a973ac47415",
         "type": "tabs",
         "children": [
           {
-            "id": "64187b5c146b36b7",
+            "id": "9d554d4451a28720",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "projects/luma/_index.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "_index"
+              "title": "新标签页"
             }
           }
         ]
@@ -182,8 +178,10 @@
       "bases:新建数据库": false
     }
   },
-  "active": "64187b5c146b36b7",
+  "active": "909b7bd50b1b1358",
   "lastOpenFiles": [
+    "Pasted image 20260928231559.png",
+    "posts/Chip8模拟器的rust实现.md",
     "projects/luma/_index.md",
     "projects/luma",
     "projects/qinghe/2026-07-22-first.md",
