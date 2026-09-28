@@ -3,8 +3,8 @@ title: Luma
 date: 2026-09-28T23:04:28+08:00
 description: ""
 archived: false
-featured: false
-repo: ""
+featured: true
+repo: https://github.com/Jaffrez/luma
 layout: project
 draft: false
 ---
