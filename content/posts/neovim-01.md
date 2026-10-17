@@ -5,7 +5,7 @@ slug: '79067f94'
 description: ""
 tags: 
     - neovim
-draft: true
+draft: false
 ---
 在使用neovim的过程中，我一直习惯于使用hjkl移动光标，
 虽然这样完全足够完成日常的编辑，但是当目标位置稍远时，
