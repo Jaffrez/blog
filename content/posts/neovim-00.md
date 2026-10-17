@@ -1,8 +1,8 @@
 ---
-title: '重新认识neovim 00 一次迟来的学习'
+title: 'Neovim 00 -- 一次迟来的学习'
 date: '2026-10-17T21:26:45+08:00'
 slug: 'd063cee5'
-description: ""
+description: "引子"
 tags:
     - neovim
 draft: false
