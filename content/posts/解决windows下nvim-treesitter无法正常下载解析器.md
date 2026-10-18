@@ -5,6 +5,7 @@ slug: "d86f51b1"
 description: "很神奇的问题"
 tags:
   - "neovim"
+draft: true
 ---
 
 
